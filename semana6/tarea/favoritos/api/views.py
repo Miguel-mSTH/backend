@@ -20,3 +20,23 @@ class FavoritoView(APIView):
         serFavorito.is_valid(raise_exception=True)
         serFavorito.save()
         return Response(serFavorito.data)
+
+class FavoritoDetailView(APIView):
+
+    def get(self,request,favorito_id):
+        dataFavorito=Favorito.objects.get(pk=favorito_id)
+        serFavorito=FavoritoSerializer(dataFavorito)
+        return Response(serFavorito.data)
+
+    def put(self,request,favorito_id):
+        dataFavorito=Favorito.objects.get(pk=favorito_id)
+        serFavorito=FavoritoSerializer(dataFavorito,data=request.data)
+        serFavorito.is_valid(raise_exception=True)
+        serFavorito.save()
+        return Response(serFavorito.data)
+
+    def delete(self,request,favorito_id):
+        dataFavorito=Favorito.objects.get(pk=favorito_id)
+        serFavorito=FavoritoSerializer(dataFavorito)
+        dataFavorito.delete()
+        return Response(serFavorito.data)
